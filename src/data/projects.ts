@@ -4,8 +4,10 @@ export interface Project {
   tech: string[];
   status: string;
   category?: string;
-  github?: string | null;
-  demo?: string | null;
+  github?: string;
+  codeberg?: string;
+  gitlab?: string;
+  demo?: string;
   image?: string;
   highlights?: string[];
   featured?: boolean;
@@ -17,6 +19,7 @@ export const projects: Project[] = [
     description:
       "An application for planning and managing Fedora release schedules.",
     tech: ["Python", "FastAPI", "Docker"],
+    codeberg: "https://codeberg.org/fedora/release-schedule-planner",
     status: "In Progress",
     category: "Open Source",
     featured: true,

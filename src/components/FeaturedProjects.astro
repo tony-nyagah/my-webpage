@@ -4,13 +4,13 @@ import { projects } from "../data/projects";
 ---
 
 <section class="section section-alt">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Featured Projects</h2>
-            <a href="/projects" class="section-link"> View All Projects → </a>
-        </div>
-        <div class="projects-grid">
-            {projects.map((project) => <ProjectCard {...project} />)}
-        </div>
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Featured Projects</h2>
+      <a href="/projects" class="section-link"> View All Projects → </a>
     </div>
+    <div class="projects-grid">
+      {projects.map((project) => <ProjectCard {...project} />)}
+    </div>
+  </div>
 </section>
