@@ -1,0 +1,67 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection("blog");
+  return blogEntries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+type Props = {
+  entry: CollectionEntry<"blog">;
+};
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+const formattedDate = entry.data.date.toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<BaseLayout pageTitle={entry.data.title}>
+  <div class="page-container">
+    <div class="container">
+      <article class="blog-post">
+        <header class="blog-post-header">
+          <h1 class="blog-post-title">{entry.data.title}</h1>
+          <div class="blog-post-meta">
+            <time datetime={entry.data.date.toISOString()}>
+              {formattedDate}
+            </time>
+            <span class="blog-post-divider">•</span>
+            <span>{entry.data.readTime}</span>
+            {
+              entry.data.platform && (
+                <>
+                  <span class="blog-post-divider">•</span>
+                  <span class="blog-platform">{entry.data.platform}</span>
+                </>
+              )
+            }
+          </div>
+          {
+            entry.data.tags && entry.data.tags.length > 0 && (
+              <div class="blog-post-tags">
+                {entry.data.tags.map((tag) => (
+                  <span class="blog-tag">{tag}</span>
+                ))}
+              </div>
+            )
+          }
+        </header>
+        <div class="blog-post-content">
+          <Content />
+        </div>
+        <footer class="blog-post-footer">
+          <a href="/blog" class="back-link">← Back to Blog</a>
+        </footer>
+      </article>
+    </div>
+  </div>
+</BaseLayout>

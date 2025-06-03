@@ -1,0 +1,97 @@
+---
+interface Props {
+  id: number;
+  title: string;
+  excerpt: string;
+  date: string;
+  readTime: string;
+  type: "internal" | "external";
+  externalUrl?: string;
+  platform?: "Medium" | "Dev.to" | "Hashnode" | string;
+  tags?: string[];
+}
+
+const {
+  id,
+  title,
+  excerpt,
+  date,
+  readTime,
+  type,
+  externalUrl,
+  platform,
+  tags,
+} = Astro.props;
+
+const isExternal = type === "external" && externalUrl;
+const formattedDate = new Date(date).toLocaleDateString("en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+---
+
+<article class="blog-card" data-tags={tags ? tags.join(",").toLowerCase() : ""}>
+  <div class="blog-card-content">
+    <h3 class="blog-card-title">
+      {
+        isExternal ? (
+          <a
+            href={externalUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="blog-card-title-link"
+          >
+            {title}
+            <span class="external-link-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </span>
+          </a>
+        ) : (
+          <a href={`/blog/${id}`} class="blog-card-title-link">
+            {title}
+          </a>
+        )
+      }
+    </h3>
+    <p class="blog-card-excerpt">{excerpt}</p>
+    <div class="blog-card-meta">
+      <time datetime={date}>
+        {formattedDate}
+      </time>
+      <span class="blog-card-divider">•</span>
+      <span>{readTime}</span>
+      {
+        platform && (
+          <>
+            <span class="blog-card-divider">•</span>
+            <span class="blog-platform">{platform}</span>
+          </>
+        )
+      }
+    </div>
+    {
+      tags && tags.length > 0 && (
+        <div class="blog-card-tags">
+          {tags.map((tag) => (
+            <span class="blog-tag">{tag}</span>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</article>

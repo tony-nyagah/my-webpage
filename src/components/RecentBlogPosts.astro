@@ -1,0 +1,42 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BlogCard from "./BlogCard.astro";
+
+// Get all blog posts and sort by date
+const allBlogPosts = await getCollection("blog", ({ data }) => {
+  return data.draft !== true;
+});
+
+// Sort by date (newest first) and take the 3 most recent
+const recentPosts = allBlogPosts
+  .sort(
+    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
+  .slice(0, 3);
+---
+
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Recent Blog Posts</h2>
+      <a href="/blog" class="section-link">View All Posts →</a>
+    </div>
+    <div class="blog-grid">
+      {
+        recentPosts.map((post, index) => (
+          <BlogCard
+            id={index + 1}
+            title={post.data.title}
+            excerpt={post.data.excerpt}
+            date={post.data.date.toISOString()}
+            readTime={post.data.readTime}
+            type={post.data.type}
+            externalUrl={post.data.externalUrl}
+            platform={post.data.platform}
+            tags={post.data.tags}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

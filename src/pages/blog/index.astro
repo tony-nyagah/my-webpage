@@ -1,0 +1,92 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import BlogCard from "../../components/BlogCard.astro";
+import BlogTagFilter from "../../components/BlogTagFilter.astro";
+
+const allBlogPosts = await getCollection("blog", ({ data }) => {
+  return data.draft !== true;
+});
+
+const sortedPosts = allBlogPosts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+
+// Separate internal and external posts
+const internalPosts = sortedPosts.filter(
+  (post) => post.data.type === "internal"
+);
+const externalPosts = sortedPosts.filter(
+  (post) => post.data.type === "external"
+);
+
+// Get all unique tags
+function getAllTags(posts: CollectionEntry<"blog">[]) {
+  const tagSet = new Set<string>();
+  posts.forEach((post) => {
+    if (post.data.tags) {
+      post.data.tags.forEach((tag) => tagSet.add(tag));
+    }
+  });
+  return Array.from(tagSet).sort();
+}
+
+const allTags = getAllTags(sortedPosts);
+---
+
+<BaseLayout pageTitle="Blog">
+  <div class="page-container">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Blog</h1>
+        <p class="page-subtitle">
+          Thoughts on development, open source, and technology
+        </p>
+      </div>
+
+      <BlogTagFilter allTags={allTags} />
+
+      <div class="blog-section">
+        <h2 class="blog-section-title">My Articles</h2>
+        <div class="blog-list">
+          {
+            internalPosts.map((post, index) => (
+              <BlogCard
+                id={index + 1}
+                title={post.data.title}
+                excerpt={post.data.excerpt}
+                date={post.data.date.toISOString()}
+                readTime={post.data.readTime}
+                type={post.data.type}
+                externalUrl={post.data.externalUrl}
+                platform={post.data.platform}
+                tags={post.data.tags}
+              />
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="blog-section">
+        <h2 class="blog-section-title">Articles on Other Platforms</h2>
+        <div class="blog-list">
+          {
+            externalPosts.map((post, index) => (
+              <BlogCard
+                id={index + 1}
+                title={post.data.title}
+                excerpt={post.data.excerpt}
+                date={post.data.date.toISOString()}
+                readTime={post.data.readTime}
+                type={post.data.type}
+                externalUrl={post.data.externalUrl}
+                platform={post.data.platform}
+                tags={post.data.tags}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

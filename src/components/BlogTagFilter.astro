@@ -1,0 +1,115 @@
+---
+interface Props {
+  allTags: string[];
+}
+
+const { allTags } = Astro.props;
+---
+
+<div class="blog-tag-filter">
+  <div class="tag-filter-header">
+    <h3>Filter by Tags</h3>
+    <button id="clear-tags-btn" class="clear-tags-btn" style="display: none;">
+      Clear All
+    </button>
+  </div>
+
+  <div class="tag-filter-buttons">
+    {
+      allTags.map((tag) => (
+        <button class="tag-filter-btn" data-tag={tag}>
+          {tag}
+        </button>
+      ))
+    }
+  </div>
+
+  <div id="selected-tags" class="selected-tags" style="display: none;">
+    <span class="selected-tags-label">Active filters:</span>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    let selectedTags = [];
+    const filterButtons = document.querySelectorAll(".tag-filter-btn");
+    const clearButton = document.getElementById("clear-tags-btn");
+    const selectedTagsDiv = document.getElementById("selected-tags");
+    const blogCards = document.querySelectorAll(".blog-card");
+
+    const updateDisplay = () => {
+      if (clearButton) {
+        clearButton.style.display = selectedTags.length > 0 ? "" : "none";
+      }
+
+      if (selectedTagsDiv) {
+        selectedTagsDiv.style.display = selectedTags.length > 0 ? "" : "none";
+
+        const existingTags = selectedTagsDiv.querySelectorAll(".selected-tag");
+        existingTags.forEach((tag) => tag.remove());
+
+        selectedTags.forEach((tag) => {
+          const span = document.createElement("span");
+          span.className = "selected-tag";
+          span.textContent = tag;
+
+          const removeBtn = document.createElement("button");
+          removeBtn.className = "remove-tag-btn";
+          removeBtn.textContent = "×";
+          removeBtn.setAttribute("aria-label", `Remove ${tag} filter`);
+          removeBtn.addEventListener("click", () => toggleTag(tag));
+
+          span.appendChild(removeBtn);
+          selectedTagsDiv.appendChild(span);
+        });
+      }
+
+      blogCards.forEach((card) => {
+        const cardTags = card.getAttribute("data-tags")?.toLowerCase() || "";
+
+        if (
+          selectedTags.length === 0 ||
+          selectedTags.some((tag) => cardTags.includes(tag.toLowerCase()))
+        ) {
+          card.style.display = "";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    };
+
+    const toggleTag = (tag) => {
+      if (selectedTags.includes(tag)) {
+        selectedTags = selectedTags.filter((t) => t !== tag);
+      } else {
+        selectedTags = [...selectedTags, tag];
+      }
+
+      filterButtons.forEach((btn) => {
+        const btnTag = btn.getAttribute("data-tag");
+        if (btnTag === tag) {
+          btn.classList.toggle("active", selectedTags.includes(tag));
+        }
+      });
+
+      updateDisplay();
+    };
+
+    const clearAllTags = () => {
+      selectedTags = [];
+      filterButtons.forEach((btn) => btn.classList.remove("active"));
+      updateDisplay();
+    };
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const tag = button.getAttribute("data-tag");
+        if (tag) toggleTag(tag);
+      });
+    });
+
+    if (clearButton) {
+      clearButton.addEventListener("click", clearAllTags);
+    }
+  });
+</script>
