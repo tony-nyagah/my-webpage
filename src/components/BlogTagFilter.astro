@@ -31,7 +31,7 @@ const { allTags } = Astro.props;
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    let selectedTags = [];
+    let selectedTags: string[] = [];
     const filterButtons = document.querySelectorAll(".tag-filter-btn");
     const clearButton = document.getElementById("clear-tags-btn");
     const selectedTagsDiv = document.getElementById("selected-tags");
@@ -71,14 +71,14 @@ const { allTags } = Astro.props;
           selectedTags.length === 0 ||
           selectedTags.some((tag) => cardTags.includes(tag.toLowerCase()))
         ) {
-          card.style.display = "";
+          (card as HTMLElement).style.display = "";
         } else {
-          card.style.display = "none";
+          (card as HTMLElement).style.display = "none";
         }
       });
     };
 
-    const toggleTag = (tag) => {
+    const toggleTag = (tag: string) => {
       if (selectedTags.includes(tag)) {
         selectedTags = selectedTags.filter((t) => t !== tag);
       } else {
