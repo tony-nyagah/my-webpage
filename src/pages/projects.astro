@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import ProjectFilter from "../components/ProjectFilter.astro";
+import { projects } from "../data/projects";
+
+// Extract unique categories from projects
+const allCategories = Array.from(
+  new Set(projects.map((project) => project.category).filter(Boolean))
+);
+const categories = ["All", ...allCategories.sort()];
+
+// Calculate stats
+const totalProjects = projects.length;
+const completedProjects = projects.filter(
+  (p) => p.status === "Completed"
+).length;
+const inProgressProjects = projects.filter(
+  (p) => p.status === "In Progress"
+).length;
+const allTech = Array.from(new Set(projects.flatMap((p) => p.tech)));
+const openSourceProjects = projects.filter(
+  (p) => p.category === "Open Source"
+).length;
+---
+
+<BaseLayout pageTitle="Projects">
+  <div class="page-container">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Projects</h1>
+        <p class="page-subtitle">
+          A collection of my work spanning open source contributions, web
+          applications, and system tools
+        </p>
+      </div>
+
+      <ProjectFilter categories={categories} />
+
+      <div class="projects-showcase">
+        {
+          projects.map((project, index) => (
+            <ProjectCard
+              title={project.title}
+              description={project.description}
+              tech={project.tech}
+              status={project.status}
+              category={project.category}
+              github={project.github}
+              demo={project.demo}
+              image={project.image}
+              highlights={project.highlights}
+              featured={true}
+            />
+          ))
+        }
+      </div>
+
+      <div class="projects-stats">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <h3>{totalProjects}</h3>
+            <p>Total Projects</p>
+          </div>
+          <div class="stat-card">
+            <h3>{completedProjects}</h3>
+            <p>Completed</p>
+          </div>
+          <div class="stat-card">
+            <h3>{allTech.length}+</h3>
+            <p>Technologies</p>
+          </div>
+          <div class="stat-card">
+            <h3>{openSourceProjects}</h3>
+            <p>Open Source</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

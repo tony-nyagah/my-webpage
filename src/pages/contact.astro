@@ -1,0 +1,146 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { contacts } from "../data/contactInfo.ts";
+
+const linksNoHttps = {
+  email: contacts.email.replace("https://", ""),
+  linkedin: contacts.linkedin.replace("https://", ""),
+  github: contacts.github.replace("https://", ""),
+  twitter: contacts.twitter.replace("https://", ""),
+};
+---
+
+<BaseLayout pageTitle="Contact Me">
+  <div class="page-container">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Let's Work Together</h1>
+        <p class="page-subtitle">
+          Ready to collaborate on something amazing? I'd love to hear from you.
+        </p>
+      </div>
+
+      <div class="contact-content">
+        <div class="contact-info">
+          <h2>Ready to Collaborate</h2>
+          <p>
+            I'm always interested in new opportunities, whether it's
+            contributing to open source projects, collaborating on innovative
+            solutions, or joining a team that values quality craftsmanship and
+            collaborative development.
+          </p>
+
+          <div class="contact-methods">
+            <div class="contact-method">
+              <h3>Email</h3>
+              <a href={`mailto:${contacts.email}`}>{linksNoHttps.email}</a>
+              <p>
+                Best for detailed project discussions and collaboration
+                opportunities.
+              </p>
+            </div>
+
+            <div class="contact-method">
+              <h3>GitHub</h3>
+              <a
+                href={`${contacts.github}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {linksNoHttps.github}
+              </a>
+              <p>Check out my code, contributions, and open source projects.</p>
+            </div>
+
+            <div class="contact-method">
+              <h3>LinkedIn</h3>
+              <a
+                href={`${contacts.linkedin}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {linksNoHttps.linkedin}
+              </a>
+              <p>Professional networking and career opportunities.</p>
+            </div>
+
+            <div class="contact-method">
+              <h3>Twitter</h3>
+              <a
+                href={`${contacts.twitter}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {linksNoHttps.twitter}
+              </a>
+              <p>Quick updates, tech discussions, and community engagement.</p>
+            </div>
+          </div>
+
+          <div class="availability">
+            <h3>Current Availability</h3>
+            <p>
+              I'm currently focused on my Fedora project work but am open to
+              discussing interesting opportunities and collaborations. Feel free
+              to reach out even if you're just looking for advice or want to
+              chat about technology.
+            </p>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <h2>Send a Message</h2>
+          <form>
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <select id="subject" name="subject" required>
+                <option value="">Select a topic</option>
+                <option value="collaboration">Collaboration Opportunity</option>
+                <option value="open-source">Open Source Project</option>
+                <option value="job">Job Opportunity</option>
+                <option value="consulting">Consulting/Freelance</option>
+                <option value="question">Technical Question</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="6"
+                placeholder="Tell me about your project, idea, or how we might work together..."
+                required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="contact-footer">
+        <div class="response-time">
+          <h3>Response Time</h3>
+          <p>
+            I typically respond to messages within 24-48 hours. If you don't
+            hear back from me within a few days, please don't hesitate to follow
+            up—sometimes messages get lost in the shuffle!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

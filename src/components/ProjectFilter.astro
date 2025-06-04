@@ -1,0 +1,62 @@
+---
+interface Props {
+  categories: string[];
+}
+
+const { categories } = Astro.props;
+---
+
+<div class="project-filter">
+  <div class="filter-buttons">
+    {
+      categories.map((category) => (
+        <button class="filter-btn" data-category={category}>
+          {category}
+        </button>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  // Initialize the filter functionality
+  function initProjectFilter() {
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    let activeCategory = "All";
+
+    // Set initial active state
+    filterButtons.forEach((button) => {
+      const category = button.getAttribute("data-category");
+      if (category === activeCategory) {
+        button.classList.add("active");
+      }
+
+      // Add click event listener
+      button.addEventListener("click", () => {
+        // Remove active class from all buttons
+        filterButtons.forEach((btn) => btn.classList.remove("active"));
+
+        // Add active class to clicked button
+        button.classList.add("active");
+
+        // Update active category
+        if (category) {
+          activeCategory = category;
+        }
+
+        // Dispatch custom event for filtering projects
+        document.dispatchEvent(
+          new CustomEvent("categoryFilter", {
+            detail: { category: activeCategory },
+          })
+        );
+      });
+    });
+  }
+
+  // Initialize when DOM is loaded
+  document.addEventListener("DOMContentLoaded", initProjectFilter);
+
+  // Re-initialize on navigation (for Astro's view transitions)
+  document.addEventListener("astro:page-load", initProjectFilter);
+</script>

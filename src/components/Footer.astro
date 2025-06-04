@@ -1,5 +1,7 @@
 ---
+import { contacts } from "../data/contactInfo.ts";
 
+const currentYear = new Date().getFullYear();
 ---
 
 <footer class="footer">
@@ -24,21 +26,21 @@
         <h4>Connect</h4>
         <div class="footer-links">
           <a
-            href="https://github.com"
+            href={`${contacts.github}`}
             target="_blank"
             rel="noopener noreferrer"
           >
             GitHub
           </a>
           <a
-            href="https://linkedin.com"
+            href={`${contacts.linkedin}`}
             target="_blank"
             rel="noopener noreferrer"
           >
             LinkedIn
           </a>
           <a
-            href="https://twitter.com"
+            href={`${contacts.twitter}`}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -49,7 +51,7 @@
     </div>
 
     <div class="footer-bottom">
-      <p>&copy; 2024 Antony Nyagah. All rights reserved.</p>
+      <p>&copy; {currentYear} Antony Nyagah. All rights reserved.</p>
     </div>
   </div>
 </footer>
