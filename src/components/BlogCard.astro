@@ -1,6 +1,7 @@
 ---
 interface Props {
   id: number;
+  slug?: string;
   title: string;
   excerpt: string;
   date: string;
@@ -13,6 +14,7 @@ interface Props {
 
 const {
   id,
+  slug,
   title,
   excerpt,
   date,
@@ -65,7 +67,7 @@ const formattedDate = new Date(date).toLocaleDateString("en-US", {
             </span>
           </a>
         ) : (
-          <a href={`/blog/${id}`} class="blog-card-title-link">
+          <a href={`/blog/${slug || id}`} class="blog-card-title-link">
             {title}
           </a>
         )
