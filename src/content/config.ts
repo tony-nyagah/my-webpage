@@ -15,6 +15,26 @@ const blog = defineCollection({
   }),
 });
 
+const projects = defineCollection({
+  type: "content",
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    tech: z.array(z.string()),
+    status: z.enum(["In Progress", "Completed", "Planned", "On Hold"]),
+    category: z.string().optional(),
+    github: z.string().optional(),
+    codeberg: z.string().optional(),
+    gitlab: z.string().optional(),
+    demo: z.string().optional(),
+    image: z.string().optional(),
+    highlights: z.array(z.string()).optional(),
+    featured: z.boolean().default(false),
+    draft: z.boolean().default(false),
+  }),
+});
+
 export const collections = {
   blog,
+  projects,
 };
