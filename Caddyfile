@@ -1,0 +1,24 @@
+# Development configuration
+:80 {
+	reverse_proxy app:4321
+}
+
+# Production configuration (uncomment and modify for your domain)
+# yourdomain.com {
+#     reverse_proxy app:4321
+#     encode gzip
+#     
+#     # Optional: Add security headers
+#     header {
+#         # Enable HSTS
+#         Strict-Transport-Security max-age=31536000;
+#         # Prevent MIME sniffing
+#         X-Content-Type-Options nosniff
+#         # Enable XSS protection
+#         X-XSS-Protection "1; mode=block"
+#         # Prevent clickjacking
+#         X-Frame-Options DENY
+#         # Control referrer information
+#         Referrer-Policy strict-origin-when-cross-origin
+#     }
+# }
