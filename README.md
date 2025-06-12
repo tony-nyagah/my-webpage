@@ -1,20 +1,8 @@
-# Astro Starter Kit: Basics
+# My Personal Webpage
 
-```sh
-pnpm create astro@latest -- --template basics
-```
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+A modern personal website built with Astro, featuring a clean design and optimized performance.
 
 ## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
 
 ```text
 /
@@ -25,24 +13,89 @@ Inside of your Astro project, you'll see the following folders and files:
 │   │   └── Layout.astro
 │   └── pages/
 │       └── index.astro
+├── docker-compose.yaml
+├── docker-compose.dev.yaml
+├── Dockerfile
 └── package.json
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
+## 🧞 Local Development Commands
 
 All commands are run from the root of the project, from a terminal:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
+| Command                | Action                                           |
+| :--------------------- | :----------------------------------------------- |
+| `pnpm install`         | Installs dependencies                            |
 | `pnpm dev`             | Starts local dev server at `localhost:4321`      |
 | `pnpm build`           | Build your production site to `./dist/`          |
 | `pnpm preview`         | Preview your build locally, before deploying     |
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
-## 👀 Want to learn more?
+## 🐳 Docker Development
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+For development with hot reloading and live updates:
+
+```bash
+# Start development server
+docker-compose -f docker-compose.dev.yaml up --build
+
+# Run in background
+docker-compose -f docker-compose.dev.yaml up -d --build
+
+# View logs
+docker-compose -f docker-compose.dev.yaml logs -f
+
+# Stop development server
+docker-compose -f docker-compose.dev.yaml down
+```
+
+The development server includes:
+
+- Hot reloading for instant changes
+- Volume mounting for real-time file updates
+- Development environment variables
+
+## 🚀 Docker Production
+
+For production deployment with optimized builds:
+
+```bash
+# Build and start production server
+docker-compose up --build
+
+# Run in background (detached mode)
+docker-compose up -d --build
+
+# View production logs
+docker-compose logs -f
+
+# Stop production server
+docker-compose down
+
+# Restart production server
+docker-compose restart
+```
+
+The production setup includes:
+
+- Optimized production build
+- Minified assets
+- Production environment variables
+- Container restart policies
+
+## 📋 Docker Requirements
+
+- Docker and Docker Compose installed
+- Port 4321 available on your machine
+- At least 512MB RAM available for container
+
+Both development and production modes serve the application at `http://localhost:4321`.
+
+## 🔧 Environment Variables
+
+| Variable   | Development | Production | Description      |
+| :--------- | :---------- | :--------- | :--------------- |
+| `NODE_ENV` | development | production | Environment mode |
+| `HOST`     | 0.0.0.0     | 0.0.0.0    | Server host      |
+| `PORT`     | 4321        | 4321       | Server port      |
