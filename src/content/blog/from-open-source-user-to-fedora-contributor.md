@@ -1,7 +1,7 @@
 ---
 title: "From Open Source User to Fedora Contributor"
 excerpt: "My journey from a Linux and open source user to becoming an active contributor to the Fedora Project."
-date: 2024-06-04
+date: 2025-06-04
 readTime: "5 min read"
 type: "internal"
 tags: ["Fedora", "Open Source", "Linux", "Community"]

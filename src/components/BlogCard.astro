@@ -36,7 +36,7 @@ const formattedDate = new Date(date).toLocaleDateString("en-US", {
 });
 ---
 
-<article class="blog-card">
+<article class="blog-card" data-tags={tags ? tags.join(",") : ""}>
   <div class="blog-card-content">
     <h3 class="blog-card-title">
       {

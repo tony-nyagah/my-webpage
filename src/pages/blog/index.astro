@@ -12,14 +12,6 @@ const sortedPosts = allBlogPosts.sort(
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
 
-// Separate internal and external posts
-const internalPosts = sortedPosts.filter(
-  (post) => post.data.type === "internal"
-);
-const externalPosts = sortedPosts.filter(
-  (post) => post.data.type === "external"
-);
-
 // Get all unique tags
 function getAllTags(posts: CollectionEntry<"blog">[]) {
   const tagSet = new Set<string>();
@@ -47,10 +39,9 @@ const allTags = getAllTags(sortedPosts);
       <BlogTagFilter allTags={allTags} />
 
       <div class="blog-section">
-        <h2 class="blog-section-title">My Articles</h2>
-        <div class="blog-list">
+        <div class="blog-grid">
           {
-            internalPosts.map((post, index) => (
+            sortedPosts.map((post, index) => (
               <BlogCard
                 id={index + 1}
                 title={post.data.title}
@@ -59,27 +50,6 @@ const allTags = getAllTags(sortedPosts);
                 readTime={post.data.readTime}
                 type={post.data.type}
                 slug={post.slug}
-                externalUrl={post.data.externalUrl}
-                platform={post.data.platform}
-                tags={post.data.tags}
-              />
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="blog-section">
-        <h2 class="blog-section-title">Articles on Other Platforms</h2>
-        <div class="blog-list">
-          {
-            externalPosts.map((post, index) => (
-              <BlogCard
-                id={index + 1}
-                title={post.data.title}
-                excerpt={post.data.excerpt}
-                date={post.data.date.toISOString()}
-                readTime={post.data.readTime}
-                type={post.data.type}
                 externalUrl={post.data.externalUrl}
                 platform={post.data.platform}
                 tags={post.data.tags}

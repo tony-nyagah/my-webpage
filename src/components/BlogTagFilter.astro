@@ -65,11 +65,17 @@ const { allTags } = Astro.props;
       }
 
       blogCards.forEach((card) => {
-        const cardTags = card.getAttribute("data-tags")?.toLowerCase() || "";
+        const cardTagsString = card.getAttribute("data-tags") || "";
+        const cardTags = cardTagsString
+          .split(",")
+          .map((tag) => tag.trim().toLowerCase())
+          .filter((tag) => tag);
 
         if (
           selectedTags.length === 0 ||
-          selectedTags.some((tag) => cardTags.includes(tag.toLowerCase()))
+          selectedTags.some((selectedTag) =>
+            cardTags.includes(selectedTag.toLowerCase())
+          )
         ) {
           (card as HTMLElement).style.display = "";
         } else {
