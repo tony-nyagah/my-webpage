@@ -2,25 +2,34 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import ProjectFilter from "../components/ProjectFilter.astro";
-import { projects } from "../data/projects";
+import { getCollection } from "astro:content";
+
+// Get all projects from content collection
+const allProjects = await getCollection("projects", ({ data }) => {
+  return data.draft !== true;
+});
 
 // Extract unique categories from projects
 const allCategories = Array.from(
-  new Set(projects.map((project) => project.category).filter(Boolean))
+  new Set(
+    allProjects
+      .map((project) => project.data.category)
+      .filter((category): category is string => Boolean(category))
+  )
 );
 const categories = ["All", ...allCategories.sort()];
 
 // Calculate stats
-const totalProjects = projects.length;
-const completedProjects = projects.filter(
-  (p) => p.status === "Completed"
+const totalProjects = allProjects.length;
+const completedProjects = allProjects.filter(
+  (p) => p.data.status === "Completed"
 ).length;
-const inProgressProjects = projects.filter(
-  (p) => p.status === "In Progress"
+const inProgressProjects = allProjects.filter(
+  (p) => p.data.status === "In Progress"
 ).length;
-const allTech = Array.from(new Set(projects.flatMap((p) => p.tech)));
-const openSourceProjects = projects.filter(
-  (p) => p.category === "Open Source"
+const allTech = Array.from(new Set(allProjects.flatMap((p) => p.data.tech)));
+const openSourceProjects = allProjects.filter(
+  (p) => p.data.category === "Open Source"
 ).length;
 ---
 
@@ -34,23 +43,24 @@ const openSourceProjects = projects.filter(
           applications, and system tools
         </p>
       </div>
-
       <ProjectFilter categories={categories} />
 
       <div class="projects-showcase">
         {
-          projects.map((project, index) => (
+          allProjects.map((project, index) => (
             <ProjectCard
-              title={project.title}
-              description={project.description}
-              tech={project.tech}
-              status={project.status}
-              category={project.category}
-              github={project.github}
-              demo={project.demo}
-              image={project.image}
-              highlights={project.highlights}
-              featured={true}
+              title={project.data.title}
+              description={project.data.description}
+              tech={project.data.tech}
+              status={project.data.status}
+              category={project.data.category}
+              github={project.data.github}
+              codeberg={project.data.codeberg}
+              gitlab={project.data.gitlab}
+              demo={project.data.demo}
+              image={project.data.image}
+              highlights={project.data.highlights}
+              featured={project.data.featured}
             />
           ))
         }
@@ -61,6 +71,10 @@ const openSourceProjects = projects.filter(
           <div class="stat-card">
             <h3>{totalProjects}</h3>
             <p>Total Projects</p>
+          </div>
+          <div class="stat-card">
+            <h3>{inProgressProjects}</h3>
+            <p>In Progress</p>
           </div>
           <div class="stat-card">
             <h3>{completedProjects}</h3>

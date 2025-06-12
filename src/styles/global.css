@@ -707,19 +707,12 @@ a:hover {
 
 .blog-tag {
     background-color: #ecf0f1;
-    color: #3498db;
+    color: #2c3e50;
     padding: 0.25rem 0.75rem;
     border-radius: 15px;
     font-size: 0.8rem;
     font-weight: 500;
     border: 1px solid #bdc3c7;
-    transition: all 0.2s ease;
-}
-
-.blog-tag:hover {
-    background-color: #3498db;
-    color: #fff;
-    cursor: pointer;
 }
 
 /* Blog Tag Filter */

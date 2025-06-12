@@ -1,6 +1,11 @@
 ---
 import ProjectCard from "./ProjectCard.astro";
-import { projects } from "../data/projects";
+import { getCollection } from "astro:content";
+
+// Get featured projects from content collection
+const allProjects = await getCollection("projects", ({ data }) => {
+  return data.draft !== true && data.featured === true;
+});
 ---
 
 <section class="section section-alt">
@@ -10,7 +15,23 @@ import { projects } from "../data/projects";
       <a href="/projects" class="section-link"> View All Projects → </a>
     </div>
     <div class="projects-grid">
-      {projects.map((project) => <ProjectCard {...project} />)}
+      {
+        allProjects.map((project) => (
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.description}
+            tech={project.data.tech}
+            status={project.data.status}
+            category={project.data.category}
+            github={project.data.github}
+            codeberg={project.data.codeberg}
+            gitlab={project.data.gitlab}
+            demo={project.data.demo}
+            image={project.data.image}
+            featured={project.data.featured}
+          />
+        ))
+      }
     </div>
   </div>
 </section>
