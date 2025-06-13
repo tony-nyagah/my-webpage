@@ -1,0 +1,50 @@
+name: Deploy to Hetzner
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          port: 22
+          script: |
+            # Navigate to deployment directory
+            cd /home/deployer/my-webpage || mkdir -p /home/deployer/my-webpage && cd /home/deployer/my-webpage
+
+            # Clone or pull latest code
+            if [ -d ".git" ]; then
+              echo "Pulling latest changes..."
+              git pull origin main
+            else
+              echo "Cloning repository..."
+              git clone https://github.com/${{ github.repository }} .
+            fi
+
+            # Stop existing containers
+            echo "Stopping existing containers..."
+            docker compose down || true
+
+            # Remove old images to save space
+            echo "Cleaning up old images..."
+            docker image prune -f
+
+            # Build and start containers
+            echo "Building and starting containers..."
+            docker compose up -d --build
+
+            # Show running containers
+            echo "Deployment complete! Running containers:"
+            docker ps
