@@ -1,7 +1,7 @@
 ---
 title: "Getting Started with Astro"
 excerpt: "Learn how to build fast, modern websites with Astro, a new static site generator that brings the best of modern web development to static sites."
-date: 2024-01-15
+date: 2025-02-15
 readTime: "8 min read"
 type: "internal"
 tags: ["Astro", "Web Development", "Static Sites", "JavaScript"]

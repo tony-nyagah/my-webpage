@@ -1,7 +1,7 @@
 ---
 title: "Modern CSS Grid Techniques"
 excerpt: "Explore advanced CSS Grid techniques for creating complex, responsive layouts with minimal code."
-date: 2024-01-05
+date: 2025-02-05
 readTime: "10 min read"
 type: "internal"
 tags: ["CSS", "Grid", "Layout", "Responsive Design"]
