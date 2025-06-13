@@ -1,9 +1,11 @@
 ---
-title: "From Open Source User to Fedora Contributor"
-excerpt: "My journey from a Linux and open source user to becoming an active contributor to the Fedora Project."
+title: "From Cracked Software to Contributing Code: My Open Source Journey"
+excerpt: "My journey from a Windows user to a Linux and open source user to becoming an active contributor to the Fedora Project."
 date: 2025-06-04
 readTime: "5 min read"
-type: "internal"
+type: "external"
+externalUrl: "https://medium.com/@nyagah/from-cracked-software-to-contributing-code-my-open-source-journey-8f0daeb53771"
+platform: "Medium"
 tags: ["Fedora", "Open Source", "Linux", "Community"]
 draft: false
 ---
