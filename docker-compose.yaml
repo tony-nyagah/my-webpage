@@ -11,12 +11,11 @@ services:
     restart: unless-stopped
     networks:
       - web
-  
+
   diabetes-progression-predictor:
     image: ghcr.io/tony-nyagah/diabetes-progression-predictor:latest
     container_name: diabetes_progression_predictor
-    ports:
-      - "8000:8000"
+    platform: linux/amd64
     restart: unless-stopped
     networks:
       - web
