@@ -46,11 +46,11 @@ jobs:
 
             # Pull latest images to ensure we have the newest versions
             echo "Pulling latest images..."
-            docker-compose pull || echo "Pull completed with warnings"
+            docker compose pull || echo "Pull completed with warnings"
 
             # Build and start containers
             echo "Building and starting containers..."
-            docker-compose up -d --build --force-recreate
+            docker compose up -d --build --force-recreate
 
             # Wait a moment for containers to start
             echo "Waiting for containers to start..."
