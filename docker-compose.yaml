@@ -11,12 +11,22 @@ services:
     restart: unless-stopped
     networks:
       - web
+  
+  diabetes-progression-predictor:
+    image: ghcr.io/tony-nyagah/diabetes-progression-predictor:latest
+    container_name: diabetes_progression_predictor
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    networks:
+      - web
 
   caddy:
     image: caddy:latest
     container_name: my_web_page_caddy
     depends_on:
       - app
+      - diabetes-progression-predictor
     ports:
       - "80:80"
       - "443:443"
