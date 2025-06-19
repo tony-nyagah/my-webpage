@@ -5,7 +5,7 @@
 
 # Diabetes predictor development
 :8080 {
-	reverse_proxy diabetes-progression-predictor:8000
+	reverse_proxy diabetes_progression_predictor:8000
 }
 
 # Production configuration (uncomment and modify for your domain)
@@ -30,7 +30,7 @@ antonynyagah.com, www.antonynyagah.com {
 
 # Diabetes predictor production
 diabetes-progression-predictor.antonynyagah.com, www.diabetes-progression-predictor.antonynyagah.com {
-	reverse_proxy diabetes-predictor:8000
+	reverse_proxy diabetes_progression_predictor:8000
 	encode gzip
 
 	# Security headers
