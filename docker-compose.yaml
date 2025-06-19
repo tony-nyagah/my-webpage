@@ -13,9 +13,8 @@ services:
       - web
 
   diabetes-progression-predictor:
-    image: ghcr.io/tony-nyagah/diabetes-progression-predictor:latest
+    image: ghcr.io/tony-nyagah/diabetes-progression-predictor:latest@sha256:ca3d223d6778585878a56059cdf3b2b87e3dca23ec70d73d56a78c4e7d1707d9
     container_name: diabetes_progression_predictor
-    platform: linux/amd64
     restart: unless-stopped
     networks:
       - web
