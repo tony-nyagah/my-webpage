@@ -24,7 +24,7 @@ services:
     container_name: my_web_page_caddy
     depends_on:
       - app
-      - diabetes_progression_predictor
+      - diabetes-progression-predictor
     ports:
       - "80:80"
       - "443:443"
